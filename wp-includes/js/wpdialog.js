@@ -1,10 +1,27 @@
-<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
-<html><head>
-<title>429 Too Many Requests</title>
-</head><body>
-<h1>Too Many Requests</h1>
-<p>The user has sent too many requests
-in a given amount of time.</p>
-<hr>
-<address>Apache/2.4.41 (Ubuntu) Server at 2009.stateofthemap.org Port 443</address>
-</body></html>
+/**
+ * @output wp-includes/js/wpdialog.js
+ */
+
+/*
+ * Wrap the jQuery UI Dialog open function remove focus from tinyMCE.
+ */
+( function($) {
+	$.widget('wp.wpdialog', $.ui.dialog, {
+		open: function() {
+			// Add beforeOpen event.
+			if ( this.isOpen() || false === this._trigger('beforeOpen') ) {
+				return;
+			}
+
+			// Open the dialog.
+			this._super();
+
+			// WebKit leaves focus in the TinyMCE editor unless we shift focus.
+			this.element.trigger('focus');
+			this._trigger('refresh');
+		}
+	});
+
+	$.wp.wpdialog.prototype.options.closeOnEscape = false;
+
+})(jQuery);

@@ -1,10 +1,73 @@
-<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
-<html><head>
-<title>429 Too Many Requests</title>
-</head><body>
-<h1>Too Many Requests</h1>
-<p>The user has sent too many requests
-in a given amount of time.</p>
-<hr>
-<address>Apache/2.4.41 (Ubuntu) Server at 2009.stateofthemap.org Port 443</address>
-</body></html>
+/*!
+ * jQuery UI Effects Blind 1.13.3
+ * https://jqueryui.com
+ *
+ * Copyright OpenJS Foundation and other contributors
+ * Released under the MIT license.
+ * https://jquery.org/license
+ */
+
+//>>label: Blind Effect
+//>>group: Effects
+//>>description: Blinds the element.
+//>>docs: https://api.jqueryui.com/blind-effect/
+//>>demos: https://jqueryui.com/effect/
+
+( function( factory ) {
+	"use strict";
+
+	if ( typeof define === "function" && define.amd ) {
+
+		// AMD. Register as an anonymous module.
+		define( [
+			"jquery",
+			"../version",
+			"../effect"
+		], factory );
+	} else {
+
+		// Browser globals
+		factory( jQuery );
+	}
+} )( function( $ ) {
+"use strict";
+
+return $.effects.define( "blind", "hide", function( options, done ) {
+	var map = {
+			up: [ "bottom", "top" ],
+			vertical: [ "bottom", "top" ],
+			down: [ "top", "bottom" ],
+			left: [ "right", "left" ],
+			horizontal: [ "right", "left" ],
+			right: [ "left", "right" ]
+		},
+		element = $( this ),
+		direction = options.direction || "up",
+		start = element.cssClip(),
+		animate = { clip: $.extend( {}, start ) },
+		placeholder = $.effects.createPlaceholder( element );
+
+	animate.clip[ map[ direction ][ 0 ] ] = animate.clip[ map[ direction ][ 1 ] ];
+
+	if ( options.mode === "show" ) {
+		element.cssClip( animate.clip );
+		if ( placeholder ) {
+			placeholder.css( $.effects.clipToBox( animate ) );
+		}
+
+		animate.clip = start;
+	}
+
+	if ( placeholder ) {
+		placeholder.animate( $.effects.clipToBox( animate ), options.duration, options.easing );
+	}
+
+	element.animate( animate, {
+		queue: false,
+		duration: options.duration,
+		easing: options.easing,
+		complete: done
+	} );
+} );
+
+} );

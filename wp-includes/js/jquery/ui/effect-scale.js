@@ -1,10 +1,59 @@
-<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
-<html><head>
-<title>429 Too Many Requests</title>
-</head><body>
-<h1>Too Many Requests</h1>
-<p>The user has sent too many requests
-in a given amount of time.</p>
-<hr>
-<address>Apache/2.4.41 (Ubuntu) Server at 2009.stateofthemap.org Port 443</address>
-</body></html>
+/*!
+ * jQuery UI Effects Scale 1.13.3
+ * https://jqueryui.com
+ *
+ * Copyright OpenJS Foundation and other contributors
+ * Released under the MIT license.
+ * https://jquery.org/license
+ */
+
+//>>label: Scale Effect
+//>>group: Effects
+//>>description: Grows or shrinks an element and its content.
+//>>docs: https://api.jqueryui.com/scale-effect/
+//>>demos: https://jqueryui.com/effect/
+
+( function( factory ) {
+	"use strict";
+
+	if ( typeof define === "function" && define.amd ) {
+
+		// AMD. Register as an anonymous module.
+		define( [
+			"jquery",
+			"../version",
+			"../effect",
+			"./effect-size"
+		], factory );
+	} else {
+
+		// Browser globals
+		factory( jQuery );
+	}
+} )( function( $ ) {
+"use strict";
+
+return $.effects.define( "scale", function( options, done ) {
+
+	// Create element
+	var el = $( this ),
+		mode = options.mode,
+		percent = parseInt( options.percent, 10 ) ||
+			( parseInt( options.percent, 10 ) === 0 ? 0 : ( mode !== "effect" ? 0 : 100 ) ),
+
+		newOptions = $.extend( true, {
+			from: $.effects.scaledDimensions( el ),
+			to: $.effects.scaledDimensions( el, percent, options.direction || "both" ),
+			origin: options.origin || [ "middle", "center" ]
+		}, options );
+
+	// Fade option to support puff
+	if ( options.fade ) {
+		newOptions.from.opacity = 1;
+		newOptions.to.opacity = 0;
+	}
+
+	$.effects.effect.size.call( this, newOptions, done );
+} );
+
+} );

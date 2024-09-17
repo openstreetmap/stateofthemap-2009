@@ -1,10 +1,45 @@
-<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
-<html><head>
-<title>429 Too Many Requests</title>
-</head><body>
-<h1>Too Many Requests</h1>
-<p>The user has sent too many requests
-in a given amount of time.</p>
-<hr>
-<address>Apache/2.4.41 (Ubuntu) Server at 2009.stateofthemap.org Port 443</address>
-</body></html>
+/*!
+ * jQuery UI Effects Puff 1.13.3
+ * https://jqueryui.com
+ *
+ * Copyright OpenJS Foundation and other contributors
+ * Released under the MIT license.
+ * https://jquery.org/license
+ */
+
+//>>label: Puff Effect
+//>>group: Effects
+//>>description: Creates a puff effect by scaling the element up and hiding it at the same time.
+//>>docs: https://api.jqueryui.com/puff-effect/
+//>>demos: https://jqueryui.com/effect/
+
+( function( factory ) {
+	"use strict";
+
+	if ( typeof define === "function" && define.amd ) {
+
+		// AMD. Register as an anonymous module.
+		define( [
+			"jquery",
+			"../version",
+			"../effect",
+			"./effect-scale"
+		], factory );
+	} else {
+
+		// Browser globals
+		factory( jQuery );
+	}
+} )( function( $ ) {
+"use strict";
+
+return $.effects.define( "puff", "hide", function( options, done ) {
+	var newOptions = $.extend( true, {}, options, {
+		fade: true,
+		percent: parseInt( options.percent, 10 ) || 150
+	} );
+
+	$.effects.effect.scale.call( this, newOptions, done );
+} );
+
+} );

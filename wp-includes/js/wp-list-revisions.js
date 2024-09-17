@@ -1,10 +1,28 @@
-<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
-<html><head>
-<title>429 Too Many Requests</title>
-</head><body>
-<h1>Too Many Requests</h1>
-<p>The user has sent too many requests
-in a given amount of time.</p>
-<hr>
-<address>Apache/2.4.41 (Ubuntu) Server at 2009.stateofthemap.org Port 443</address>
-</body></html>
+/**
+ * @output wp-includes/js/wp-list-revisions.js
+ */
+
+(function(w) {
+	var init = function() {
+		var pr = document.getElementById('post-revisions'),
+		inputs = pr ? pr.getElementsByTagName('input') : [];
+		pr.onclick = function() {
+			var i, checkCount = 0, side;
+			for ( i = 0; i < inputs.length; i++ ) {
+				checkCount += inputs[i].checked ? 1 : 0;
+				side = inputs[i].getAttribute('name');
+				if ( ! inputs[i].checked &&
+				( 'left' == side && 1 > checkCount || 'right' == side && 1 < checkCount && ( ! inputs[i-1] || ! inputs[i-1].checked ) ) &&
+				! ( inputs[i+1] && inputs[i+1].checked && 'right' == inputs[i+1].getAttribute('name') ) )
+					inputs[i].style.visibility = 'hidden';
+				else if ( 'left' == side || 'right' == side )
+					inputs[i].style.visibility = 'visible';
+			}
+		};
+		pr.onclick();
+	};
+	if ( w && w.addEventListener )
+		w.addEventListener('load', init, false);
+	else if ( w && w.attachEvent )
+		w.attachEvent('onload', init);
+})(window);

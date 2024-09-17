@@ -1,10 +1,61 @@
-<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
-<html><head>
-<title>429 Too Many Requests</title>
-</head><body>
-<h1>Too Many Requests</h1>
-<p>The user has sent too many requests
-in a given amount of time.</p>
-<hr>
-<address>Apache/2.4.41 (Ubuntu) Server at 2009.stateofthemap.org Port 443</address>
-</body></html>
+/**
+ * @output wp-includes/js/wp-sanitize.js
+ */
+
+( function () {
+
+	window.wp = window.wp || {};
+
+	/**
+	 * wp.sanitize
+	 *
+	 * Helper functions to sanitize strings.
+	 */
+	wp.sanitize = {
+
+		/**
+		 * Strip HTML tags.
+		 *
+		 * @param {string} text Text to have the HTML tags striped out of.
+		 *
+		 * @return  Stripped text.
+		 */
+		stripTags: function( text ) {
+			text = text || '';
+
+			// Do the replacement.
+			var _text = text
+					.replace( /<!--[\s\S]*?(-->|$)/g, '' )
+					.replace( /<(script|style)[^>]*>[\s\S]*?(<\/\1>|$)/ig, '' )
+					.replace( /<\/?[a-z][\s\S]*?(>|$)/ig, '' );
+
+			// If the initial text is not equal to the modified text,
+			// do the search-replace again, until there is nothing to be replaced.
+			if ( _text !== text ) {
+				return wp.sanitize.stripTags( _text );
+			}
+
+			// Return the text with stripped tags.
+			return _text;
+		},
+
+		/**
+		 * Strip HTML tags and convert HTML entities.
+		 *
+		 * @param {string} text Text to strip tags and convert HTML entities.
+		 *
+		 * @return Sanitized text. False on failure.
+		 */
+		stripTagsAndEncodeText: function( text ) {
+			var _text = wp.sanitize.stripTags( text ),
+				textarea = document.createElement( 'textarea' );
+
+			try {
+				textarea.textContent = _text;
+				_text = wp.sanitize.stripTags( textarea.value );
+			} catch ( er ) {}
+
+			return _text;
+		}
+	};
+}() );

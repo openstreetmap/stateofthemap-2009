@@ -1,10 +1,30 @@
-<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
-<html><head>
-<title>429 Too Many Requests</title>
-</head><body>
-<h1>Too Many Requests</h1>
-<p>The user has sent too many requests
-in a given amount of time.</p>
-<hr>
-<address>Apache/2.4.41 (Ubuntu) Server at 2009.stateofthemap.org Port 443</address>
-</body></html>
+/**
+ * @output wp-includes/js/zxcvbn-async.js
+ */
+
+/* global _zxcvbnSettings */
+
+/**
+ * Loads zxcvbn asynchronously by inserting an async script tag before the first
+ * script tag on the page.
+ *
+ * This makes sure zxcvbn isn't blocking loading the page as it is a big
+ * library. The source for zxcvbn is read from the _zxcvbnSettings global.
+ */
+(function() {
+  var async_load = function() {
+    var first, s;
+    s = document.createElement('script');
+    s.src = _zxcvbnSettings.src;
+    s.type = 'text/javascript';
+    s.async = true;
+    first = document.getElementsByTagName('script')[0];
+    return first.parentNode.insertBefore(s, first);
+  };
+
+  if (window.attachEvent != null) {
+    window.attachEvent('onload', async_load);
+  } else {
+    window.addEventListener('load', async_load, false);
+  }
+}).call(this);
