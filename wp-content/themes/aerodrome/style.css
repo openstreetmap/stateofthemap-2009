@@ -120,7 +120,7 @@ p, li {
         margin:0;
         padding: 5px 0 10px 0;
         /*background:url(images/banner.png);*/
-        background:url('https://example.com:1234/wp-content/uploads/2009/05/sotm_top_050709.jpg');
+        background:url('/wp-content/uploads/2009/05/sotm_top_050709.jpg');
         opacity:0.8;
 
 
