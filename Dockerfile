@@ -13,6 +13,7 @@ RUN echo "gzip_static on; gzip_proxied any;" >/etc/nginx/conf.d/gzip_static.conf
 # RUN echo "brotli_static on; brotli_proxied any;" >/etc/nginx/conf.d/brotli_static.conf
 
 # Copy built site from build stage
+COPY --from=build /app/_site/podcasts /usr/share/nginx/html/podcasts
 COPY --from=build /app/_site /usr/share/nginx/html
 
 # Test configuration during docker build
