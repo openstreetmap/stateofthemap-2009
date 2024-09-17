@@ -1,3 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="/wp-sitemap.xsl" ?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>/tag/announcement/</loc></url><url><loc>/tag/general/</loc></url><url><loc>/tag/ccc/</loc></url><url><loc>/tag/host/</loc></url><url><loc>/tag/venue/</loc></url><url><loc>/tag/amsterdam/</loc></url><url><loc>/tag/sotm09/</loc></url></urlset>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>/tag/announcement/</loc>
+  </url>
+  <url>
+    <loc>/tag/general/</loc>
+  </url>
+  <url>
+    <loc>/tag/ccc/</loc>
+  </url>
+  <url>
+    <loc>/tag/host/</loc>
+  </url>
+  <url>
+    <loc>/tag/venue/</loc>
+  </url>
+  <url>
+    <loc>/tag/amsterdam/</loc>
+  </url>
+  <url>
+    <loc>/tag/sotm09/</loc>
+  </url>
+</urlset>
