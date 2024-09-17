@@ -1,0 +1,38 @@
+#!/bin/bash
+content_type='video/mp4'
+extension='mov'
+url='http://www.stateofthemap.org/podcasts/'
+
+
+for file in $(find . -name *.$extension | sort); do
+    title="$(dirname $file | sed "s/\.\/\([a-z]\)\([a-z][a-z]\)[a-zA-Z0-9]*\/\([a-z]\)\([a-z]*\)\_[a-z]*/\u\1\2 \u\3\4/g"
+    ) $(basename $file .$extension | sed "s/_/ /g")"
+
+    #runtime=$(grep $i'.*Video |' $index -11 | grep cliplaenge | sed -e "s:<[^>]*>::g" | sed -e 's/^[ \t]*//' | head -c 5)
+    date_rfc=$(date -r $file -R)
+    desc=''
+    link=$url$file    
+    length=$(wc -c $file | cut -d' ' -f1)
+    
+    tee -a content_$extension.xml <<CAT
+    <item>
+        <title>$title</title>
+        <link>$link</link>
+        <pubDate>$daterfc</pubDate>
+        <description>$desc</description>
+        <enclosure url="$link" length="$length" type="$content_type"/>
+        <guid isPermaLink="false">$file</guid>
+    </item>
+CAT
+#        <itunes:duration>00:$runtime</itunes:duration>
+#        <itunes:summary>$desc</itunes:summary>
+#    echo $file
+#    echo $title
+#    echo $link
+#    echo $daterfc
+#    echo ---------------
+done
+#
+cat header_$extension.xml content_$extension.xml footer.xml > podcast_$extension.xml
+rm content_$extension.xml
+
