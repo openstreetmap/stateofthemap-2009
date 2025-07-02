@@ -22,5 +22,8 @@ concurrency:
 
 jobs:
   container-build:
+    permissions:
+      contents: read
+      packages: write
     uses: openstreetmap/github-shared-workflows/.github/workflows/container-build-publish.yml@main
 
