@@ -4,8 +4,8 @@ COPY . /app/_site
 
 RUN find /app/_site/ -type f \( -name "*.html" -o -name "*.css" -o -name "*.js" -o -name "*.xml" -o -name "*.json" -o -name "*.svg" -o -name "*.ttf" -o -name "*.woff2" -o -name "*.woff" -o -name "*.eot" -o -name "*.otf" \) -print0 | xargs -0 -P4 --no-run-if-empty gzip -9k
 
-# https://github.com/nginxinc/docker-nginx-unprivileged
-FROM ghcr.io/nginxinc/nginx-unprivileged:stable-alpine AS webserver
+# https://github.com/nginx/docker-nginx-unprivileged
+FROM ghcr.io/nginx/nginx-unprivileged:stable AS webserver
 
 RUN echo "absolute_redirect off;" >/etc/nginx/conf.d/no-absolute_redirect.conf
 RUN echo "gzip_static on; gzip_proxied any;" >/etc/nginx/conf.d/gzip_static.conf
