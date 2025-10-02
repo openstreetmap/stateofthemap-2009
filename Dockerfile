@@ -2,7 +2,7 @@ FROM docker.io/debian:stable-slim AS build
 
 COPY . /app/_site
 
-RUN find /app/_site/ -type f \( -name "*.html" -o -name "*.css" -o -name "*.js" -o -name "*.xml" -o -name "*.json" -o -name "*.svg" -o -name "*.ttf" -o -name "*.woff2" -o -name "*.woff" -o -name "*.eot" -o -name "*.otf" \) -print0 | xargs -0 -P4 --no-run-if-empty gzip -9k --force
+RUN find /app/_site/ -type f \( -name "*.html" -o -name "*.css" -o -name "*.js" -o -name "*.xml" -o -name "*.json" -o -name "*.svg" -o -name "*.ttf" -o -name "*.woff2" -o -name "*.woff" -o -name "*.eot" -o -name "*.otf" \) -print0 | xargs -0 -P4 --no-run-if-empty gzip -9k --force --no-name
 
 # https://github.com/nginx/docker-nginx-unprivileged
 FROM ghcr.io/nginx/nginx-unprivileged:stable AS webserver
